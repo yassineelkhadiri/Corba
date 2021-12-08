@@ -42,27 +42,29 @@ public class Serveur {
             //PARTIE EXO2//
             ///////////////////////////////////////////
              
-            // // Utiliser NamingContextExt qui est Interoperable
-            // NamingContextExt ncRef = NamingContextExtHelper.narrow(calc);
-            // // enregistrer le servant dans le service de nommage
-            // String name = "exo2";
-            // NameComponent path[] = ncRef.to_name( name );
-            // ncRef.rebind(path, calc);
+            // Utiliser NamingContextExt qui est Interoperable
+            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+            calcul href = calculHelper.narrow(calc);
+            // enregistrer le servant dans le service de nommage
+            String name = "exo2";
+            NameComponent path[] = ncRef.to_name( name );
+            ncRef.rebind(path, calc);
 
             ////////////////////////////////////////////////////////
 	    //  Sauvegarde de la reference d'objet dans un fichier
             ///////////////////////////////////////////////////////
-            try {
-                String calc_ref = orb.object_to_string(calc);
-                String refFile = "calcul.ref";
-                PrintWriter out = new PrintWriter(new FileOutputStream(refFile));
-                out.println(calc_ref);
-                out.close();
-            } catch (IOException ex) {
-                System.err.println(
-                    "Impossible d'ecrire la reference dans calcul.ref");
-                System.exit(1);
-            }
+            // try {
+            //     String calc_ref = orb.object_to_string(calc);
+            //     String refFile = "calcul.ref";
+            //     PrintWriter out = new PrintWriter(new FileOutputStream(refFile));
+            //     out.println(calc_ref);
+            //     out.close();
+            // } catch (IOException ex) {
+            //     System.err.println(
+            //         "Impossible d'ecrire la reference dans calcul.ref");
+            //     System.exit(1);
+            // }
 
 
 	    ////////////////////////////////////////////////////////////////

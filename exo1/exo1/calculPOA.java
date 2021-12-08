@@ -31,8 +31,8 @@ public abstract class calculPOA extends org.omg.PortableServer.Servant
       throw new org.omg.CORBA.BAD_OPERATION (0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 
     switch (__method.intValue ())
-    {
-       case 0:  // exo1/calcul/incrementer
+    {   
+       case 0:  // exo1/calcul/incrementer   //Reponse question 4
        {
          org.omg.CORBA.IntHolder data = new org.omg.CORBA.IntHolder ();
          data.value = in.read_long ();
@@ -41,8 +41,7 @@ public abstract class calculPOA extends org.omg.PortableServer.Servant
          out.write_long (data.value);
          break;
        }
-
-       case 1:  // exo1/calcul/decrementer
+       case 1:  // exo1/calcul/decrementer  //Reponse question 4
        {
          org.omg.CORBA.IntHolder data = new org.omg.CORBA.IntHolder ();
          data.value = in.read_long ();

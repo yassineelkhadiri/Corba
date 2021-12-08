@@ -19,6 +19,8 @@ public class Client {
         ////////////////////////////////////////////////////
         ORB orb = ORB.init(args, null);
 
+        
+
         if (args.length != 1) {
             System.err.println("utilisation : Client nombre");
             System.exit(1);
@@ -29,21 +31,16 @@ public class Client {
         //PARTIE EXO2///////
         /////////////////////////////////////
          
-        // try {
+        try {
         // // obtenir une reference au service de nommage
-        // org.omg.CORBA.Object objRef =
-        // orb.resolve_initial_references("NameService");
-        // // Utiliser NamingContextExt au lieu de NamingContext.
-        // //car interoperable
-        // NamingContextExt ncRef =
-        // NamingContextExtHelper.narrow(objRef);
-        // // demander la reference de l'objet au service de noms
-        // String nom = "exo2";
-        // calcul incdec = calculHelper.narrow
-        // (ncRef.resolve_str(nom));
-        // }catch (Exception e) {
-        // 	System.out.println(e);
-        // }
+        org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+        // Utiliser NamingContextExt au lieu de NamingContext.
+        //car interoperable
+        NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+        // demander la reference de l'objet au service de noms
+        String nom = "exo2";
+        org.omg.CORBA.Object obj = ncRef.resolve_str(nom);
+        
 
         ////////////////////////////////////////////////////
         // Recuperation de la reference d'objet du serveur
@@ -52,31 +49,31 @@ public class Client {
         // fichier. A ce stade, il est bien sur possible 
         // d'invoquer un service de nommage.
         ////////////////////////////////////////////////////
-        String ior = null;
+        // String ior = null;
 
-        try {
-            String ref = "calcul.ref";
-            FileInputStream file = new FileInputStream(ref);
-            BufferedReader in = new BufferedReader(new InputStreamReader(file));
-            ior = in.readLine();
-            file.close();
-        } catch (IOException ex) {
-            System.err.println("Impossible de lire fichier : `" +
-                ex.getMessage() + "'");
-            System.exit(1);
-        }
+        // try {
+        //     String ref = "calcul.ref";
+        //     FileInputStream file = new FileInputStream(ref);
+        //     BufferedReader in = new BufferedReader(new InputStreamReader(file));
+        //     ior = in.readLine();
+        //     file.close();
+        // } catch (IOException ex) {
+        //     System.err.println("Impossible de lire fichier : `" +
+        //         ex.getMessage() + "'");
+        //     System.exit(1);
+        // }
 
         ////////////////////////////////////////////////////
         // Construction d'une reference d'objet, non type d'abord,
         // puis "cast" en une reference sur l'interface 
         // "calcul"  avec narrow (generation d'une souche)
         ////////////////////////////////////////////////////
-        org.omg.CORBA.Object obj = orb.string_to_object(ior);
+        // org.omg.CORBA.Object obj = orb.string_to_object(ior);
 
-        if (obj == null) {
-            System.err.println("Erreur sur string_to_object() ");
-            throw new RuntimeException();
-        }
+        // if (obj == null) {
+        //     System.err.println("Erreur sur string_to_object() ");
+        //     throw new RuntimeException();
+        // }
 
         calcul calc = calculHelper.narrow(obj);
 
@@ -112,6 +109,10 @@ public class Client {
         } catch (IOException ex) {
             System.out.println("Erreur lecture commande (char)");
             System.exit(1);
+        }
+    }
+        catch (Exception e) {
+        	System.out.println(e);
         }
 
         System.exit(0);
